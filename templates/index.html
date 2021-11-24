@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600&family=Saira&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='styles/style.css') }}"
+    />
+    <title>Cadastro de Clientes</title>
+  </head>
+  <body>
+    <section class="container">
+      <header class="header">
+        <h1>Cadastro de Clientes</h1>
+      </header>
+
+      <div class="options">
+        <form
+          class="search-form"
+          autocomplete="off"
+          method="POST"
+          action="/search-client"
+        >
+          <div class="search-input">
+            <label for="search-client">Buscar Cliente</label>
+            <input type="text" name="search-client" id="search-client" />
+          </div>
+          <button id="search-button" type="submit">
+            <img
+              src="{{ url_for('static',filename='assets/search.svg') }}"
+              alt=""
+            />
+          </button>
+          {%if list_clients_search: %}
+          <a id="end-search" href="/search-client/end">Encerrar Busca</a>
+          {%endif%}
+        </form>
+        <div class="new-client-container">
+          <a id="new-client-button" href="#" onClick="Modal.open()">Novo +</a>
+        </div>
+      </div>
+
+      {% if not list_clients: %}
+      <div class="no-clients">
+        <h3>Nenhum cliente cadastrado.</h3>
+      </div>
+      {% else %}
+
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Assunto</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if not list_clients_search: %} {% for clients in list_clients: %}
+
+          <tr>
+            <td>{{ clients['id'] }}</td>
+            <td>{{ clients['name'] }}</td>
+            <td>{{ clients['phone'] }}</td>
+            <td>{{ clients['subject'] }}</td>
+            <td>
+              <a href="/delete-client/{{clients['id']}}">
+                <img
+                  src="{{ url_for('static',filename='assets/delete.svg') }}"
+                  onclick=""
+                  class="close"
+                  alt=""
+                />
+              </a>
+            </td>
+          </tr>
+
+          {% endfor %} {% else %} {% for clients_search in list_clients_search:
+          %}
+          <tr>
+            <td>{{ clients_search['id'] }}</td>
+            <td>{{ clients_search['name'] }}</td>
+            <td>{{ clients_search['phone'] }}</td>
+            <td>{{ clients_search['subject'] }}</td>
+            <td>
+              <a href="/delete-client/{{clients_search['id']}}">
+                <img
+                  src="{{ url_for('static',filename='assets/delete.svg') }}"
+                  onclick=""
+                  class="close"
+                  alt=""
+                />
+              </a>
+            </td>
+          </tr>
+
+          {% endfor %} {% endif %}
+        </tbody>
+      </table>
+      {% endif %}
+    </section>
+
+    <div class="modal-overlay">
+      <div class="modal">
+        <header>
+          <div>
+            <h2>Novo Cliente</h2>
+            <img
+              src="{{ url_for('static',filename='assets/delete.svg') }}"
+              onclick="Modal.close()"
+              class="close"
+              alt=""
+            />
+          </div>
+        </header>
+
+        <div id="form">
+          <form method="POST" action="/save-client" autocomplete="off">
+            <div class="input-group">
+              <label for="name">Nome</label>
+              <input type="text" name="name" id="name" required />
+            </div>
+            <div class="input-group">
+              <label for="phone">Telefone</label>
+              <input
+                type="text"
+                name="phone"
+                id="phone"
+                minlength="10"
+                maxlength="15"
+                placeholder="(xx) xxxx-xxxx"
+              />
+            </div>
+            <div class="input-group">
+              <label for="subject">Assunto</label>
+              <input type="text" name="subject" id="subject" />
+            </div>
+
+            <div class="register-client-container">
+              <button href="#">Cadastrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      function id(el) {
+        return document.getElementById(el);
+      }
+
+      const Modal = {
+        open() {
+          document.querySelector('.modal-overlay').classList.add('active');
+        },
+        close() {
+          document.querySelector('.modal-overlay').classList.remove('active');
+        },
+      };
+
+      function mask(obj, func) {
+        valueObj = obj;
+        valueFunc = func;
+        setTimeout('executeMask()', 1);
+      }
+
+      function executeMask() {
+        valueObj.value = valueFunc(valueObj.value);
+      }
+
+      function phoneMask(val) {
+        val = val.replace(/\D/g, '');
+        val = val.replace(/^(\d{2})(\d)/g, '($1) $2');
+        val = val.replace(/(\d)(\d{4})$/, '$1-$2');
+        return val;
+      }
+
+      window.onload = function () {
+        id('phone').onkeyup = function () {
+          mask(this, phoneMask);
+        };
+      };
+    </script>
+  </body>
+</html>
