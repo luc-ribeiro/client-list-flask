@@ -2,12 +2,16 @@
 Flask Client List
 </h1>
 
-## 💻 Projeto
-Projeto criado para avaliação da disciplina Linguagem de Programação da FATEC Rio Preto, utilizando Python e Flask.
-Uma lista de cadastro de clientes simples com nome, telefone e assunto a tratar. 
-A aplicação permite que o usuário realize uma busca de clientes pelo nome, telefone ou assunto, e também permite a remoção de clientes.
+<div align="right">
+  Clique <a href="https://github.com/luc-ribeiro/client-list-flask/blob/master/README-PTBR.md">aqui</a> para ver a versão em Português.
+</div>
 
-## 🚀 Tecnologias
+## 💻 Project
+Project created for evaluation of the Programming Language discipline at FATEC Rio Preto, using Python and Flask.
+A simple client registration list with name, phone number, and subject to address.
+The application allows users to search for clients by name, phone number, or subject, and also allows client removal.
+
+## 🚀 Techs
 
 <div style="display: inline_block">
 	<img align="center" alt="Luc-HTML" height="40" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg">
@@ -22,28 +26,28 @@ A aplicação permite que o usuário realize uma busca de clientes pelo nome, te
 ### Preview
 ![banner](https://github.com/luc-ribeiro/client-list-flask/blob/master/design/preview.gif)
 
-## :page_facing_up: Como utilizar
+## :page_facing_up: How to run
 
-Faça um clone deste repositório:
+Clone this repository:
 
 ```sh
   $ git clone https://github.com/luc-ribeiro/client-list-flask.git
 ```
-Instale as dependências:
+Install dependencies:
 
 ```sh
   $ pip install -r requirements.txt
 ```
 
-Execute o comando 
+Run the command 
 
 ```sh
   $ python3 app.py
 ```
 
-Acesse o projeto em `localhost:5000`
+Access the project at `localhost:5000`
 
 
 ## :memo: License
 
-Copyright © 2021 Lucas Ribeiro / FATEC Rio Preto
+MIT © 2021 Lucas Ribeiro / FATEC Rio Preto
